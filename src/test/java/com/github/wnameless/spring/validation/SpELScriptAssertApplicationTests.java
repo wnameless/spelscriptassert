@@ -14,7 +14,7 @@ import com.github.wnameless.spring.validation.bean.PrimitiveBooleanBean;
 import jakarta.validation.Validator;
 
 @SpringBootTest(classes = SpringTestApplication.class)
-public class SpELAssertApplicationTests {
+public class SpELScriptAssertApplicationTests {
 
   @Autowired
   Validator validator;

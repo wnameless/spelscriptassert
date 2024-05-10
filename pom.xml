@@ -13,7 +13,7 @@
 
   <groupId>com.github.wnameless.spring</groupId>
   <artifactId>spelscriptassert</artifactId>
-  <version>0.0.1-SNAPSHOT</version>
+  <version>1.0.0-SNAPSHOT</version>
 
   <name>spelscriptassert</name>
   <description>Spring Expression Language(SpEL) Jakarta validator</description>
