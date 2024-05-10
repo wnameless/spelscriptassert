@@ -55,8 +55,8 @@ public class SpELScriptAssertValidator
     }
 
     // Extract all helper methods from helper classes
-    Arrays.asList(constraint.helpers()) //
-        .stream().flatMap(clazz -> Stream.of(clazz.getMethods()))
+    Arrays.asList(constraint.helpers()).stream() //
+        .flatMap(clazz -> Stream.of(clazz.getMethods()))
         .filter(m -> Modifier.isStatic(m.getModifiers())) //
         .forEach(helperMethods::add);
   }
@@ -73,8 +73,8 @@ public class SpELScriptAssertValidator
     return true;
   }
 
-  private boolean evaluate(Expression expression, EvaluationContext context) {
-    Object value = expression.getValue(context);
+  private boolean evaluate(Expression expression, EvaluationContext evaluationContext) {
+    Object value = expression.getValue(evaluationContext);
 
     if (value instanceof Boolean bool) {
       return bool;
@@ -133,17 +133,17 @@ public class SpELScriptAssertValidator
   }
 
   private StandardEvaluationContext createEvaluationContext(Object rootObject) {
-    var context = new StandardEvaluationContext(rootObject);
-    context.setTypeConverter(TYPE_CONV);
+    var evaluationContext = new StandardEvaluationContext(rootObject);
+    evaluationContext.setTypeConverter(TYPE_CONV);
 
     if (beanFactory != null) {
-      context.setBeanResolver(new BeanFactoryResolver(beanFactory));
+      evaluationContext.setBeanResolver(new BeanFactoryResolver(beanFactory));
     }
 
-    helperMethods.stream()
-        .forEach(helperMethod -> context.registerFunction(helperMethod.getName(), helperMethod));
+    helperMethods.stream().forEach(
+        helperMethod -> evaluationContext.registerFunction(helperMethod.getName(), helperMethod));
 
-    return context;
+    return evaluationContext;
   }
 
 }
