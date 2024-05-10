@@ -8,6 +8,7 @@ import org.springframework.boot.test.context.SpringBootTest;
 import com.github.wnameless.spring.validation.bean.ComponentBean;
 import com.github.wnameless.spring.validation.bean.CustomBean;
 import com.github.wnameless.spring.validation.bean.HelperBean;
+import com.github.wnameless.spring.validation.bean.MixBean;
 import com.github.wnameless.spring.validation.bean.PerformIfBean;
 import com.github.wnameless.spring.validation.bean.PrimitiveBooleanBean;
 import jakarta.validation.Validator;
@@ -53,6 +54,13 @@ public class SpELAssertApplicationTests {
     var violations = List.copyOf(validator.validate(bean));
     assertEquals(1, violations.size());
     assertEquals("Custom: test", violations.get(0).getMessage());
+  }
+
+  @Test
+  public void testMixBean() {
+    var bean = new MixBean();
+    var violations = List.copyOf(validator.validate(bean));
+    assertEquals(0, violations.size());
   }
 
 }
