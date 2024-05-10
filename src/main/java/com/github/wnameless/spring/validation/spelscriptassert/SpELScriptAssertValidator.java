@@ -116,7 +116,7 @@ public class SpELScriptAssertValidator
       return array.length != 0;
     }
     if (value instanceof CharSequence words) {
-      return !String.valueOf(words).isBlank();
+      return !new StringBuilder(words.length()).append(words).toString().isBlank();
     }
     if (value instanceof Optional opt) {
       if (opt.isEmpty()) {
