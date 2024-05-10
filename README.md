@@ -71,7 +71,7 @@ public class MathHelper {
 ```
 
 # Quick Start
-Inject Spring MessageSource to the Hibernate Validator
+Inject Spring MessageSource to the Jakarta Validator
 ```java
 @Configuration
 public class SpELScriptAssertConfig {
