@@ -6,5 +6,5 @@ import com.github.wnameless.spring.validation.SpELScriptAssert;
 @SpELScriptAssert(script = "b", reportOn = "b", message = "{reportOn} is false")
 public class CharSequenceBean {
   public String a = "   ";
-  public CharSequence b = "c";
+  public CharSequence b = "I";
 }
