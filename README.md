@@ -15,7 +15,7 @@ Bean
     performIf = "a != null && b != null && c != null", //
     helpers = {MathHelper.class}, //
     reportOn = "result", //
-    message = "{com.github.wnameless.spring.validation.SpELScriptAssert.MixBean}")
+    message = "{com.github.wnameless.spring.validation.spelscriptassert.bean.MixBean}")
 public class MixBean {
 
   public Integer result = 10;
@@ -33,7 +33,7 @@ result != (a + b) * c
 
 Message properties:
 ```properties
-com.github.wnameless.spring.validation.SpELScriptAssert.MixBean={reportOn} != (a + b) * c
+com.github.wnameless.spring.validation.spelscriptassert.bean.MixBean={reportOn} != (a + b) * c
 ```
 
 Spring Component:
@@ -48,7 +48,7 @@ public class MathComponent {
 }
 ```
 
-Helper class
+Helper class:
 ```java
 public class MathHelper {
 
@@ -137,7 +137,7 @@ Validation message:
 a is false
 ```
 
-### 4. Non-empty Optional is True, otherwise False. However Optional<Boolean> can only be dertermined by its own returning value.
+### 4. Non-empty Optional is True, otherwise False. However Optional\<Boolean\> can only be dertermined by its own returning value.
 ```java
 @SpELScriptAssert(script = "a", reportOn = "a", message = "{reportOn} is false")
 @SpELScriptAssert(script = "b", reportOn = "b", message = "{reportOn} is false")
@@ -168,4 +168,3 @@ Validation message:
 ```
 a is false
 ```
-
