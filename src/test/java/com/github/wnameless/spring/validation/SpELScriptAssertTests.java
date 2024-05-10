@@ -14,7 +14,7 @@ import com.github.wnameless.spring.validation.bean.PrimitiveBooleanBean;
 import jakarta.validation.Validator;
 
 @SpringBootTest(classes = SpringTestApplication.class)
-public class SpELScriptAssertApplicationTests {
+public class SpELScriptAssertTests {
 
   @Autowired
   Validator validator;
@@ -53,14 +53,15 @@ public class SpELScriptAssertApplicationTests {
     var bean = new CustomBean();
     var violations = List.copyOf(validator.validate(bean));
     assertEquals(1, violations.size());
-    assertEquals("Custom: test", violations.get(0).getMessage());
+    assertEquals("Custom message: test", violations.get(0).getMessage());
   }
 
   @Test
   public void testMixBean() {
     var bean = new MixBean();
     var violations = List.copyOf(validator.validate(bean));
-    assertEquals(0, violations.size());
+    assertEquals(1, violations.size());
+    assertEquals("result != (a + b) * c", violations.get(0).getMessage());
   }
 
 }

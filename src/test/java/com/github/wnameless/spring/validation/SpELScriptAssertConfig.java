@@ -7,7 +7,7 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.validation.beanvalidation.LocalValidatorFactoryBean;
 
 @Configuration
-public class SpELScriptAssertAppConfig {
+public class SpELScriptAssertConfig {
 
   @Autowired
   MessageSource messageSource;
