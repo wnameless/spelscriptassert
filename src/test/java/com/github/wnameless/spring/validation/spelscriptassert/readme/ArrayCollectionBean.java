@@ -1,8 +1,8 @@
-package com.github.wnameless.spring.validation.readme;
+package com.github.wnameless.spring.validation.spelscriptassert.readme;
 
 import java.util.List;
 import java.util.Map;
-import com.github.wnameless.spring.validation.SpELScriptAssert;
+import com.github.wnameless.spring.validation.spelscriptassert.SpELScriptAssert;
 
 @SpELScriptAssert(script = "a", reportOn = "a", message = "{reportOn} is false")
 @SpELScriptAssert(script = "b", reportOn = "b", message = "{reportOn} is false")

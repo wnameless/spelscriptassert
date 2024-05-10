@@ -1,4 +1,4 @@
-package com.github.wnameless.spring.validation;
+package com.github.wnameless.spring.validation.spelscriptassert;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.MessageSource;

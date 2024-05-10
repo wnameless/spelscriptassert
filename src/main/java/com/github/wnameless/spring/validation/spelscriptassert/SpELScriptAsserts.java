@@ -1,4 +1,4 @@
-package com.github.wnameless.spring.validation;
+package com.github.wnameless.spring.validation.spelscriptassert;
 
 import java.lang.annotation.Documented;
 import java.lang.annotation.ElementType;

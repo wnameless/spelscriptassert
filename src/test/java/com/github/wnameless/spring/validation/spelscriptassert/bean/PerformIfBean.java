@@ -1,11 +1,11 @@
-package com.github.wnameless.spring.validation.bean;
+package com.github.wnameless.spring.validation.spelscriptassert.bean;
 
 import java.time.LocalDateTime;
 import java.util.Collection;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
-import com.github.wnameless.spring.validation.SpELScriptAssert;
+import com.github.wnameless.spring.validation.spelscriptassert.SpELScriptAssert;
 
 @SpELScriptAssert(script = "boolFalse", performIf = "boolTrue")
 @SpELScriptAssert(script = "boolFalse", performIf = "boolFalse")

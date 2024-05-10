@@ -1,16 +1,16 @@
-package com.github.wnameless.spring.validation;
+package com.github.wnameless.spring.validation.spelscriptassert;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import java.util.List;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
-import com.github.wnameless.spring.validation.bean.ComponentBean;
-import com.github.wnameless.spring.validation.bean.CustomBean;
-import com.github.wnameless.spring.validation.bean.HelperBean;
-import com.github.wnameless.spring.validation.bean.MixBean;
-import com.github.wnameless.spring.validation.bean.PerformIfBean;
-import com.github.wnameless.spring.validation.bean.PrimitiveBooleanBean;
+import com.github.wnameless.spring.validation.spelscriptassert.bean.ComponentBean;
+import com.github.wnameless.spring.validation.spelscriptassert.bean.CustomBean;
+import com.github.wnameless.spring.validation.spelscriptassert.bean.HelperBean;
+import com.github.wnameless.spring.validation.spelscriptassert.bean.MixBean;
+import com.github.wnameless.spring.validation.spelscriptassert.bean.PerformIfBean;
+import com.github.wnameless.spring.validation.spelscriptassert.bean.PrimitiveBooleanBean;
 import jakarta.validation.Validator;
 
 @SpringBootTest(classes = SpringTestApplication.class)

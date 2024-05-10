@@ -1,4 +1,4 @@
-package com.github.wnameless.spring.validation;
+package com.github.wnameless.spring.validation.spelscriptassert;
 
 import java.lang.reflect.Method;
 import java.lang.reflect.Modifier;

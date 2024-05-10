@@ -1,4 +1,4 @@
-package com.github.wnameless.spring.validation.bean;
+package com.github.wnameless.spring.validation.spelscriptassert.bean;
 
 import org.springframework.stereotype.Component;
 

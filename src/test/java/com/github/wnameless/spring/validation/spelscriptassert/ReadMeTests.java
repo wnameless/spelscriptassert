@@ -1,4 +1,4 @@
-package com.github.wnameless.spring.validation;
+package com.github.wnameless.spring.validation.spelscriptassert;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import java.util.List;
@@ -7,11 +7,11 @@ import java.util.stream.Collectors;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
-import com.github.wnameless.spring.validation.readme.ArrayCollectionBean;
-import com.github.wnameless.spring.validation.readme.CharSequenceBean;
-import com.github.wnameless.spring.validation.readme.NullBean;
-import com.github.wnameless.spring.validation.readme.NumBean;
-import com.github.wnameless.spring.validation.readme.OptionalBean;
+import com.github.wnameless.spring.validation.spelscriptassert.readme.ArrayCollectionBean;
+import com.github.wnameless.spring.validation.spelscriptassert.readme.CharSequenceBean;
+import com.github.wnameless.spring.validation.spelscriptassert.readme.NullBean;
+import com.github.wnameless.spring.validation.spelscriptassert.readme.NumBean;
+import com.github.wnameless.spring.validation.spelscriptassert.readme.OptionalBean;
 import jakarta.validation.Validator;
 
 @SpringBootTest(classes = SpringTestApplication.class)
