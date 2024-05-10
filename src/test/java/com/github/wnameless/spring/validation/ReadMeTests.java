@@ -9,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import com.github.wnameless.spring.validation.readme.ArrayCollectionBean;
 import com.github.wnameless.spring.validation.readme.CharSequenceBean;
+import com.github.wnameless.spring.validation.readme.NullBean;
 import com.github.wnameless.spring.validation.readme.NumBean;
 import com.github.wnameless.spring.validation.readme.OptionalBean;
 import jakarta.validation.Validator;
@@ -51,6 +52,14 @@ public class ReadMeTests {
     assertEquals(2, violations.size());
     assertEquals(Set.of("a is false", "c is false"),
         violations.stream().map(v -> v.getMessage()).collect(Collectors.toSet()));
+  }
+
+  @Test
+  public void testNullBean() {
+    var bean = new NullBean();
+    var violations = List.copyOf(validator.validate(bean));
+    assertEquals(1, violations.size());
+    assertEquals("a is false", violations.get(0).getMessage());
   }
 
 }

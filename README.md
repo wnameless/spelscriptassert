@@ -1,11 +1,11 @@
 [![Maven Central](https://maven-badges.herokuapp.com/maven-central/com.github.wnameless.spring/spelscriptassert/badge.svg)](https://maven-badges.herokuapp.com/maven-central/com.github.wnameless.spring/spelscriptassert)
 [![codecov](https://codecov.io/gh/wnameless/spelscriptassert/branch/master/graph/badge.svg)](https://codecov.io/gh/wnameless/spelscriptassert)
 
-spelscriptassert
+SpELScriptAssert
 =============
 Spring Expression Language(SpEL) Jakarta validator.
 
-## Purpose
+## Demo
 Using Spring Expression Language(SpEL) to validate a Java bean.
 
 Bean
@@ -153,5 +153,19 @@ Validation message:
 ```
 a is false
 c is false
+```
+
+### 5. Default behavior: Non-null is True, otherwise False.
+```java
+@SpELScriptAssert(script = "a", reportOn = "a", message = "{reportOn} is false")
+@SpELScriptAssert(script = "b", reportOn = "b", message = "{reportOn} is false")
+public class NullBean {
+  public BigInteger a = null;
+  public BigDecimal b = BigDecimal.valueOf(123L);
+}
+```
+Validation message:
+```
+a is false
 ```
 
