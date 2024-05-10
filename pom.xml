@@ -16,7 +16,7 @@
   <version>0.0.1-SNAPSHOT</version>
 
   <name>spelscriptassert</name>
-  <description>SpEL Jakarta validator</description>
+  <description>Spring Expression Language(SpEL) Jakarta validator</description>
 
   <properties>
     <java.version>17</java.version>
