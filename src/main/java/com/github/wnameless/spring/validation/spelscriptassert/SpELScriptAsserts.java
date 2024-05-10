@@ -7,7 +7,7 @@ import java.lang.annotation.RetentionPolicy;
 import java.lang.annotation.Target;
 
 /**
- * Repeating Annotations for {@link SpELScriptAssert}.
+ * The containing annotation type for {@link SpELScriptAssert}.
  * 
  * @author Wei-Ming Wu
  */
@@ -17,7 +17,7 @@ import java.lang.annotation.Target;
 public @interface SpELScriptAsserts {
 
   /**
-   * @return A array of {@link SpELScriptAssert} to be validated.
+   * @return An array of {@link SpELScriptAssert} to be validated.
    */
   SpELScriptAssert[] value();
 
