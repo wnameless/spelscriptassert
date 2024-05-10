@@ -26,17 +26,17 @@ public class MixBean {
 }
 ```
 
-Validation message
+Validation message:
 ```
 result != (a + b) * c
 ```
 
-Message properties
+Message properties:
 ```properties
 com.github.wnameless.spring.validation.SpELScriptAssert.MixBean={reportOn} != (a + b) * c
 ```
 
-Spring Component
+Spring Component:
 ```java
 @Component
 public class MathComponent {
@@ -70,7 +70,7 @@ public class MathHelper {
 ```
 
 # Quick Start
-Inject Spring MessageSource to the Jakarta Validator
+Inject Spring MessageSource to the Jakarta Validator.
 ```java
 @Configuration
 public class SpELScriptAssertConfig {
@@ -129,7 +129,7 @@ c is false
 @SpELScriptAssert(script = "b", reportOn = "b", message = "{reportOn} is false")
 public class CharSequenceBean {
   public String a = "   ";
-  public CharSequence b = "c";
+  public CharSequence b = "I";
 }
 ```
 Validation message:
