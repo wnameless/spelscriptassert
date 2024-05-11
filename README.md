@@ -75,9 +75,9 @@ public class MathHelper {
 # Feature List
 | Name | Description | Since |
 | --- | --- | --- |
-| Optional Spring Environment | @SpELScriptAssert can be used standalone or with Spring Environment. The only difference is that `@springComponent` syntax won't work in standalone mode. | v1.0.0 |
+| Optional Spring Environment | @SpELScriptAssert can be used standalone or with Spring Environment. The only difference is that `@springComponent` syntax of SpEL expression won't work in standalone mode. | v1.0.0 |
 | performIf | A condition expression for determining whether a validation is performed or NOT. | v1.0.0 |
-| helpers | Register static methods from Helper Classes. Methods can be called by `#helperMethod` syntax in SpEL expression. | v1.0.0 |
+| helpers | Register static methods from given Helper Classes. Methods can be called by `#helperMethod` syntax in SpEL expression. | v1.0.0 |
 | reportOn | Same as `reportOn` in Hibernate validation @ScriptAssert annotation. | v1.0.0 |
 
 
