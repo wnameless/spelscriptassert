@@ -120,10 +120,10 @@ Standalone mode
 # Feature List<a id='top'></a>
 | Name | Description | Since |
 | --- | --- | --- |
-| [SpEL template string for message](#1.1.0_1) | Them message attribute of @SpELScriptAssert now accepts #{spel_expr} code blocks. | v1.1.0 |
-| [target](#1.1.0_2) | A optional attribute can hold an evaluation result for further use. | v1.1.0 |
+| [SpEL code blocks in message template](#1.1.0_1) | Them message attribute of @SpELScriptAssert now accepts #{spel_expr} code blocks. | v1.1.0 |
+| [target](#1.1.0_2) | An optional attribute can hold an evaluation result for further use. | v1.1.0 |
 | Optional Spring Environment | @SpELScriptAssert can be used standalone or with Spring Environment. The only difference is that `@springComponent` syntax of SpEL expression won't work in standalone mode. | v1.0.0 |
-| Java Module supported  | module-info.java | v1.0.0 |
+| Java Module supported  | The module-info.java included. | v1.0.0 |
 | performIf | A condition expression for determining whether a validation is performed or NOT. | v1.0.0 |
 | helpers | Register static methods from given Helper Classes. Methods can be called by `#helperMethod` syntax in SpEL expression. | v1.0.0 |
 | reportOn | Same as `reportOn` in Hibernate validation @ScriptAssert annotation. | v1.0.0 |
@@ -161,7 +161,7 @@ Validation message:
 bi1 * bi2 = 121932631112635269 and the digits are more than 10
 ```
 
-## [:top:](#top) SpELScriptAssert Evaluation Strategies<a id="1.0.0_1"></a>
+## [:top:](#top) Smart Evaluation Strategies<a id="1.0.0_1"></a>
 SpELScriptAssert expects all evaluation scripts (both `script` and `performIf`) which always return Boolean values, however it also accepts other returning value types and treats them as Boolean values.
 
 ### 1. Non-zero number is True, zero is False.
