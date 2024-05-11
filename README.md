@@ -14,14 +14,14 @@ Using Spring Expression Language(SpEL) to validate a Java bean.
 Bean
 ```java
 @SpELScriptAssert( //
-    script = "@mathComponent.multiply(#add(a, b), c) == result", //
+    script = "@mathComponent.multiply(#add(a, b), c) == output", //
     performIf = "a != null && b != null && c != null", //
     helpers = {MathHelper.class}, //
-    reportOn = "result", //
+    reportOn = "output", //
     message = "{com.github.wnameless.spring.validation.spelscriptassert.bean.MixBean}")
 public class MixBean {
 
-  public Integer result = 10;
+  public Integer output = 10;
   public Integer a = 1;
   public Integer b = 2;
   public Integer c = 3;
@@ -31,7 +31,7 @@ public class MixBean {
 
 Validation message:
 ```
-result != (a + b) * c
+output != (a + b) * c
 ```
 
 Message properties:

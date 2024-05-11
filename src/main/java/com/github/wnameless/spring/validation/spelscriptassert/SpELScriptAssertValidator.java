@@ -1,5 +1,6 @@
 package com.github.wnameless.spring.validation.spelscriptassert;
 
+import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.lang.reflect.Modifier;
 import java.util.ArrayList;
@@ -8,7 +9,10 @@ import java.util.Collection;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
+import java.util.regex.Pattern;
 import java.util.stream.Stream;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.BeanFactory;
 import org.springframework.beans.factory.BeanFactoryAware;
 import org.springframework.context.expression.BeanFactoryResolver;
@@ -33,13 +37,19 @@ import jakarta.validation.ConstraintValidatorContext;
 public class SpELScriptAssertValidator
     implements ConstraintValidator<SpELScriptAssert, Object>, BeanFactoryAware {
 
+  private static final Logger log = LoggerFactory.getLogger(SpELScriptAssertValidator.class);
+
+  private static final String TARGET_NAME = "target";
+
   private static final ExpressionParser EXPR_PARSER = new SpelExpressionParser();
   private static final TypeConverter TYPE_CONV = new StandardTypeConverter();
 
   private BeanFactory beanFactory;
 
-  private Expression expression;
+  private Expression scriptExpr;
   private Expression performIfExpr;
+  private Expression targetExpr;
+  private TargetPrinter targetPrinter;
   private List<Method> helperMethods = new ArrayList<>();
 
   @Override
@@ -49,9 +59,29 @@ public class SpELScriptAssertValidator
 
   @Override
   public void initialize(SpELScriptAssert constraint) {
-    expression = EXPR_PARSER.parseExpression(constraint.script());
+    scriptExpr = EXPR_PARSER.parseExpression(constraint.script());
     if (!constraint.performIf().isBlank()) {
       performIfExpr = EXPR_PARSER.parseExpression(constraint.performIf());
+    }
+    if (!constraint.target().isBlank()) {
+      targetExpr = EXPR_PARSER.parseExpression(constraint.target());
+    }
+
+    if (constraint.targetPrinter() == StandardTargetPrinter.class) {
+      targetPrinter = new StandardTargetPrinter();
+    } else {
+      if (beanFactory == null) {
+        try {
+          targetPrinter = constraint.targetPrinter().getDeclaredConstructor().newInstance();
+        } catch (InstantiationException | IllegalAccessException | IllegalArgumentException
+            | InvocationTargetException | NoSuchMethodException | SecurityException e) {
+          log.error(constraint.targetPrinter().getSimpleName()
+              + " can NOT be instantiated, use StandardTargetPrinter instead", e);
+          targetPrinter = new StandardTargetPrinter();
+        }
+      } else {
+        targetPrinter = beanFactory.getBean(constraint.targetPrinter());
+      }
     }
 
     // Extract all helper methods from helper classes
@@ -67,8 +97,19 @@ public class SpELScriptAssertValidator
     if (validatedValue == null) return true;
 
     EvaluationContext evaluationContext = createEvaluationContext(validatedValue);
+
     if (performIfExpr == null || evaluate(performIfExpr, evaluationContext)) {
-      return evaluate(expression, evaluationContext);
+      boolean result = evaluate(scriptExpr, evaluationContext);
+      if (result == false) {
+        var defaultTemplate = constraintValidatorContext.getDefaultConstraintMessageTemplate();
+        constraintValidatorContext.disableDefaultConstraintViolation();
+        defaultTemplate = defaultTemplate.replaceAll(Pattern.quote("{#" + TARGET_NAME + "}"),
+            targetExpr == null ? targetPrinter.print(null)
+                : targetPrinter.print(evaluationContext.lookupVariable(TARGET_NAME)));
+        constraintValidatorContext.buildConstraintViolationWithTemplate(defaultTemplate)
+            .addConstraintViolation();
+      }
+      return result;
     }
     return true;
   }
@@ -142,6 +183,10 @@ public class SpELScriptAssertValidator
 
     helperMethods.stream().forEach(
         helperMethod -> evaluationContext.registerFunction(helperMethod.getName(), helperMethod));
+
+    if (targetExpr != null) {
+      evaluationContext.setVariable(TARGET_NAME, targetExpr.getValue(evaluationContext));
+    }
 
     return evaluationContext;
   }

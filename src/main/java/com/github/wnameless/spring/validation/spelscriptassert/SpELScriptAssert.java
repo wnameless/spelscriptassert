@@ -40,6 +40,13 @@ public @interface SpELScriptAssert {
   String script();
 
   /**
+   * @return The optional target which is written in SpEL script.
+   */
+  String target() default "";
+
+  Class<? extends TargetPrinter> targetPrinter() default StandardTargetPrinter.class;
+
+  /**
    * @return The evaluating condition of the validation SpEL script.
    */
   String performIf() default "";

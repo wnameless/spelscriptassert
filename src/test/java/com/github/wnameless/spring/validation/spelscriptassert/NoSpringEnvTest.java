@@ -6,8 +6,10 @@ import org.junit.jupiter.api.Test;
 import com.github.wnameless.spring.validation.spelscriptassert.bean.ComponentBean;
 import com.github.wnameless.spring.validation.spelscriptassert.bean.CustomBean;
 import com.github.wnameless.spring.validation.spelscriptassert.bean.HelperBean;
+import com.github.wnameless.spring.validation.spelscriptassert.bean.NoTargetPrinterBean;
 import com.github.wnameless.spring.validation.spelscriptassert.bean.PerformIfBean;
 import com.github.wnameless.spring.validation.spelscriptassert.bean.PrimitiveBooleanBean;
+import com.github.wnameless.spring.validation.spelscriptassert.bean.StandaloneTargetPrinterBean;
 import jakarta.validation.Validation;
 import jakarta.validation.ValidationException;
 import jakarta.validation.Validator;
@@ -60,6 +62,22 @@ public class NoSpringEnvTest {
     var violations = List.copyOf(validator.validate(bean));
     assertEquals(1, violations.size());
     assertEquals("Custom message: test", violations.get(0).getMessage());
+  }
+
+  @Test
+  public void testStandaloneTargetPrinterBean() {
+    var bean = new StandaloneTargetPrinterBean();
+    var violations = List.copyOf(validator.validate(bean));
+    assertEquals(1, violations.size());
+    assertEquals("01000", violations.get(0).getMessage());
+  }
+
+  @Test
+  public void testNoTargetPrinterBean() {
+    var bean = new NoTargetPrinterBean();
+    var violations = List.copyOf(validator.validate(bean));
+    assertEquals(1, violations.size());
+    assertEquals("1000", violations.get(0).getMessage());
   }
 
 }
