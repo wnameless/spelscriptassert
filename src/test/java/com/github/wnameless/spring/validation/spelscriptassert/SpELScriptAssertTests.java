@@ -11,7 +11,6 @@ import com.github.wnameless.spring.validation.spelscriptassert.bean.HelperBean;
 import com.github.wnameless.spring.validation.spelscriptassert.bean.MixBean;
 import com.github.wnameless.spring.validation.spelscriptassert.bean.PerformIfBean;
 import com.github.wnameless.spring.validation.spelscriptassert.bean.PrimitiveBooleanBean;
-import com.github.wnameless.spring.validation.spelscriptassert.bean.SpringTargetPrinterBean;
 import com.github.wnameless.spring.validation.spelscriptassert.bean.TargetBean;
 import jakarta.validation.Validator;
 
@@ -67,19 +66,11 @@ public class SpELScriptAssertTests {
   }
 
   @Test
-  public void testResultBean() {
+  public void testTargetBean() {
     var bean = new TargetBean();
     var violations = List.copyOf(validator.validate(bean));
     assertEquals(1, violations.size());
     assertEquals("Multiplication(a,b,c): 1000 > 100", violations.get(0).getMessage());
-  }
-
-  @Test
-  public void testSpringTargetPrinterBean() {
-    var bean = new SpringTargetPrinterBean();
-    var violations = List.copyOf(validator.validate(bean));
-    assertEquals(1, violations.size());
-    assertEquals("001000", violations.get(0).getMessage());
   }
 
 }

@@ -8,7 +8,7 @@ Spring Expression Language(SpEL) Jakarta validator.
 ## Purpose
 Apply SpEL to Hibernate @ScriptAssert by creating a new validation annotation @SpELScriptAssert.
 
-## Demo
+## Demo - basic
 Using Spring Expression Language(SpEL) to validate a Java bean.
 
 Bean
@@ -60,6 +60,32 @@ public class MathHelper {
   }
 
 }
+```
+
+## Demo - advanced
+Bean
+```java
+@SpELScriptAssert( //
+    target = "a * b * c", //
+    script = "#target > 10", //
+    message = "#{#target} {validation.AdvancedBean.multiplication}")
+public class AdvancedBean {
+
+  public Integer a = 1;
+  public Integer b = 2;
+  public Integer c = 3;
+
+}
+```
+
+Validation message:
+```
+009 is NOT greater than Ten
+```
+
+Message properties:
+```properties
+validation.AdvancedBean.multiplication=is NOT greater than Ten
 ```
 
 # Maven Repo

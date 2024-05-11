@@ -1,6 +1,5 @@
 package com.github.wnameless.spring.validation.spelscriptassert;
 
-import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.lang.reflect.Modifier;
 import java.util.ArrayList;
@@ -9,7 +8,6 @@ import java.util.Collection;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
-import java.util.regex.Pattern;
 import java.util.stream.Stream;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -41,15 +39,16 @@ public class SpELScriptAssertValidator
 
   private static final String TARGET_NAME = "target";
 
-  private static final ExpressionParser EXPR_PARSER = new SpelExpressionParser();
   private static final TypeConverter TYPE_CONV = new StandardTypeConverter();
+  private static final ExpressionParser EXPR_PARSER = new SpelExpressionParser();
+  private static final SpELTemplateStringResolver TEMPLATE_STR_RESOLVER =
+      new SpELTemplateStringResolver(EXPR_PARSER);
 
   private BeanFactory beanFactory;
 
   private Expression scriptExpr;
   private Expression performIfExpr;
   private Expression targetExpr;
-  private TargetPrinter targetPrinter;
   private List<Method> helperMethods = new ArrayList<>();
 
   @Override
@@ -65,23 +64,6 @@ public class SpELScriptAssertValidator
     }
     if (!constraint.target().isBlank()) {
       targetExpr = EXPR_PARSER.parseExpression(constraint.target());
-    }
-
-    if (constraint.targetPrinter() == StandardTargetPrinter.class) {
-      targetPrinter = new StandardTargetPrinter();
-    } else {
-      if (beanFactory == null) {
-        try {
-          targetPrinter = constraint.targetPrinter().getDeclaredConstructor().newInstance();
-        } catch (InstantiationException | IllegalAccessException | IllegalArgumentException
-            | InvocationTargetException | NoSuchMethodException | SecurityException e) {
-          log.error(constraint.targetPrinter().getSimpleName()
-              + " can NOT be instantiated, use StandardTargetPrinter instead", e);
-          targetPrinter = new StandardTargetPrinter();
-        }
-      } else {
-        targetPrinter = beanFactory.getBean(constraint.targetPrinter());
-      }
     }
 
     // Extract all helper methods from helper classes
@@ -101,12 +83,11 @@ public class SpELScriptAssertValidator
     if (performIfExpr == null || evaluate(performIfExpr, evaluationContext)) {
       boolean result = evaluate(scriptExpr, evaluationContext);
       if (result == false) {
-        var defaultTemplate = constraintValidatorContext.getDefaultConstraintMessageTemplate();
+        String defaultTemplate = constraintValidatorContext.getDefaultConstraintMessageTemplate();
         constraintValidatorContext.disableDefaultConstraintViolation();
-        defaultTemplate = defaultTemplate.replaceAll(Pattern.quote("{#" + TARGET_NAME + "}"),
-            targetExpr == null ? targetPrinter.print(null)
-                : targetPrinter.print(evaluationContext.lookupVariable(TARGET_NAME)));
-        constraintValidatorContext.buildConstraintViolationWithTemplate(defaultTemplate)
+
+        String resolvedString = TEMPLATE_STR_RESOLVER.resolve(defaultTemplate, evaluationContext);
+        constraintValidatorContext.buildConstraintViolationWithTemplate(resolvedString)
             .addConstraintViolation();
       }
       return result;
