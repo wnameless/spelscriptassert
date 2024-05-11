@@ -5,6 +5,9 @@ SpELScriptAssert
 =============
 Spring Expression Language(SpEL) Jakarta validator.
 
+## Purpose
+Apply SpEL to Hibernate @ScriptAssert by creating a new validation annotation @SpELScriptAssert.
+
 ## Demo
 Using Spring Expression Language(SpEL) to validate a Java bean.
 
@@ -69,8 +72,17 @@ public class MathHelper {
 </dependency>
 ```
 
-# Quick Start
-Inject Spring MessageSource to the Jakarta Validator.
+# Feature List
+| Name | Description | Since |
+| --- | --- | --- |
+| Optional Spring Environment | @SpELScriptAssert can be used standalone or with Spring Environment. The only difference is that `@component` syntax won't work in standalone mode. | v1.0.0 |
+| performIf | A condition expression for determining whether a validation is performed or NOT. | v1.0.0 |
+| helpers | Register static methods from Helper Classes. Methods can be called by `#helperMethod` syntax in SpEL expression. | v1.0.0 |
+| reportOn | Same as `reportOn` in Hibernate validation @ScriptAssert annotation. | v1.0.0 |
+
+
+# Quick Start - configure ValidationMessages resource bundle
+Spring Environment - Inject MessageSource into the Jakarta Validator.
 ```java
 @Configuration
 public class SpELScriptAssertConfig {
@@ -86,6 +98,11 @@ public class SpELScriptAssertConfig {
   }
 
 }
+```
+
+Standalone mode
+```java
+// Jakarta Validator looks up `ValidationMessages.properties` file under classpath by default
 ```
 
 # SpELScriptAssert Evaluation Strategies
