@@ -18,7 +18,7 @@ Bean
     performIf = "a != null && b != null && c != null", //
     helpers = {MathHelper.class}, //
     reportOn = "output", //
-    message = "{com.github.wnameless.spring.validation.spelscriptassert.bean.MixBean}")
+    message = "{validation.MixBean.output}")
 public class MixBean {
 
   public Integer output = 10;
@@ -36,29 +36,21 @@ output != (a + b) * c
 
 Message properties:
 ```properties
-com.github.wnameless.spring.validation.spelscriptassert.bean.MixBean={reportOn} != (a + b) * c
+validation.MixBean.output={reportOn} != (a + b) * c
 ```
 
 Spring Component:
 ```java
 @Component
 public class MathComponent {
-
-  public int multiply(int a, int b) {
-    return a * b;
-  }
-
+  public int multiply(int a, int b) { return a * b; }
 }
 ```
 
 Helper class:
 ```java
 public class MathHelper {
-
-  public static int add(int a, int b) {
-    return a + b;
-  }
-
+  public static int add(int a, int b) { return a + b; }
 }
 ```
 

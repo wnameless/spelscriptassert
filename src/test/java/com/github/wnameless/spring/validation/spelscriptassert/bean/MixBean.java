@@ -7,7 +7,7 @@ import com.github.wnameless.spring.validation.spelscriptassert.SpELScriptAssert;
     performIf = "a != null && b != null && c != null", //
     helpers = {MathHelper.class}, //
     reportOn = "output", //
-    message = "{com.github.wnameless.spring.validation.spelscriptassert.bean.MixBean}")
+    message = "{validation.MixBean.output}")
 public class MixBean {
 
   public Integer output = 10;
