@@ -9,8 +9,6 @@ import java.util.List;
 import java.util.Map;
 import java.util.Optional;
 import java.util.stream.Stream;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.BeanFactory;
 import org.springframework.beans.factory.BeanFactoryAware;
 import org.springframework.context.expression.BeanFactoryResolver;
@@ -34,8 +32,6 @@ import jakarta.validation.ConstraintValidatorContext;
  */
 public class SpELScriptAssertValidator
     implements ConstraintValidator<SpELScriptAssert, Object>, BeanFactoryAware {
-
-  private static final Logger log = LoggerFactory.getLogger(SpELScriptAssertValidator.class);
 
   private static final String TARGET_NAME = "target";
 
