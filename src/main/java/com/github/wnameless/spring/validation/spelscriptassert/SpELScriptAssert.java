@@ -44,6 +44,9 @@ public @interface SpELScriptAssert {
    */
   String target() default "";
 
+  /**
+   * @return A class is used to print the target value in message template.
+   */
   Class<? extends TargetPrinter> targetPrinter() default StandardTargetPrinter.class;
 
   /**
