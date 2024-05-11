@@ -7,11 +7,13 @@ import java.util.stream.Collectors;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+import com.github.wnameless.spring.validation.spelscriptassert.readme.AdvancedBean;
 import com.github.wnameless.spring.validation.spelscriptassert.readme.ArrayCollectionBean;
 import com.github.wnameless.spring.validation.spelscriptassert.readme.CharSequenceBean;
 import com.github.wnameless.spring.validation.spelscriptassert.readme.NullBean;
 import com.github.wnameless.spring.validation.spelscriptassert.readme.NumBean;
 import com.github.wnameless.spring.validation.spelscriptassert.readme.OptionalBean;
+import com.github.wnameless.spring.validation.spelscriptassert.readme.TargetBean;
 import jakarta.validation.Validator;
 
 @SpringBootTest(classes = SpringTestApplication.class)
@@ -60,6 +62,23 @@ public class ReadMeTests {
     var violations = List.copyOf(validator.validate(bean));
     assertEquals(1, violations.size());
     assertEquals("a is false", violations.get(0).getMessage());
+  }
+
+  @Test
+  public void testAdvancedBean() {
+    var bean = new AdvancedBean();
+    var violations = List.copyOf(validator.validate(bean));
+    assertEquals(1, violations.size());
+    assertEquals("6 is NOT greater than Ten before adding 5", violations.get(0).getMessage());
+  }
+
+  @Test
+  public void testTargetBean() {
+    var bean = new TargetBean();
+    var violations = List.copyOf(validator.validate(bean));
+    assertEquals(1, violations.size());
+    assertEquals("bi1 * bi2 = 121932631112635269 and the digits are more than 10",
+        violations.get(0).getMessage());
   }
 
 }

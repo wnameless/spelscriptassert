@@ -1,2 +1,6 @@
 Version 1.0.0
 + First release
+
+Version 1.1.0
++ Add SpEL template string resolver for building validation message
++ Add the target attribute for @SpELScriptAssert

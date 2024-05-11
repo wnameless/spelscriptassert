@@ -5,6 +5,7 @@ import java.util.List;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+import com.github.wnameless.spring.validation.spelscriptassert.bean.CodeBlockBean;
 import com.github.wnameless.spring.validation.spelscriptassert.bean.ComponentBean;
 import com.github.wnameless.spring.validation.spelscriptassert.bean.CustomBean;
 import com.github.wnameless.spring.validation.spelscriptassert.bean.HelperBean;
@@ -71,6 +72,15 @@ public class SpELScriptAssertTests {
     var violations = List.copyOf(validator.validate(bean));
     assertEquals(1, violations.size());
     assertEquals("Multiplication(a,b,c): 1000 > 100", violations.get(0).getMessage());
+  }
+
+  @Test
+  public void testCodeBlockBean() {
+    var bean = new CodeBlockBean();
+    var violations = List.copyOf(validator.validate(bean));
+    assertEquals(1, violations.size());
+    assertEquals("str is NOT empty, str is 'SpELScriptAssert' with length of 16",
+        violations.get(0).getMessage());
   }
 
 }

@@ -8,7 +8,7 @@ Spring Expression Language(SpEL) Jakarta validator.
 ## Purpose
 Apply SpEL to Hibernate @ScriptAssert by creating a new validation annotation @SpELScriptAssert.
 
-## Demo - basic
+## Demo - basic usage
 Using Spring Expression Language(SpEL) to validate a Java bean.
 
 Bean
@@ -62,13 +62,13 @@ public class MathHelper {
 }
 ```
 
-## Demo - advanced
+## Demo - advanced usage
 Bean
 ```java
 @SpELScriptAssert( //
     target = "a * b * c", //
     script = "#target > 10", //
-    message = "#{#target} {validation.AdvancedBean.multiplication}")
+    message = "#{#target} {validation.AdvancedBean.multiplication} #{10 - T(java.lang.Math).multiplyExact(a, b) * c + 1}")
 public class AdvancedBean {
 
   public Integer a = 1;
@@ -80,12 +80,12 @@ public class AdvancedBean {
 
 Validation message:
 ```
-009 is NOT greater than Ten
+6 is NOT greater than Ten before adding 5
 ```
 
 Message properties:
 ```properties
-validation.AdvancedBean.multiplication=is NOT greater than Ten
+validation.AdvancedBean.multiplication=is NOT greater than Ten before adding
 ```
 
 # Maven Repo
@@ -98,32 +98,17 @@ validation.AdvancedBean.multiplication=is NOT greater than Ten
 </dependency>
 ```
 
-# Feature List
-| Name | Description | Since |
-| --- | --- | --- |
-| Optional Spring Environment | @SpELScriptAssert can be used standalone or with Spring Environment. The only difference is that `@springComponent` syntax of SpEL expression won't work in standalone mode. | v1.0.0 |
-| Java Module supported  | module-info.java | v1.0.0 |
-| performIf | A condition expression for determining whether a validation is performed or NOT. | v1.0.0 |
-| helpers | Register static methods from given Helper Classes. Methods can be called by `#helperMethod` syntax in SpEL expression. | v1.0.0 |
-| reportOn | Same as `reportOn` in Hibernate validation @ScriptAssert annotation. | v1.0.0 |
-
-
-# Quick Start - configure ValidationMessages resource bundle
+## Quick Start - configure ValidationMessages resource bundle
 Spring Environment - Inject MessageSource into the Jakarta Validator.
 ```java
 @Configuration
 public class SpELScriptAssertConfig {
-
-  @Autowired
-  MessageSource messageSource;
-
   @Bean
-  LocalValidatorFactoryBean validatorFactoryBean() {
+  LocalValidatorFactoryBean validatorFactoryBean(MessageSource messageSource) {
     var bean = new LocalValidatorFactoryBean();
     bean.setValidationMessageSource(messageSource);
     return bean;
   }
-
 }
 ```
 
@@ -132,7 +117,51 @@ Standalone mode
 // Jakarta Validator looks up `ValidationMessages.properties` file under classpath by default
 ```
 
-# SpELScriptAssert Evaluation Strategies
+# Feature List<a id='top'></a>
+| Name | Description | Since |
+| --- | --- | --- |
+| [SpEL template string for message](#1.1.0_1) | Them message attribute of @SpELScriptAssert now accepts #{spel_expr} code blocks. | v1.1.0 |
+| [target](#1.1.0_2) | A optional attribute can hold an evaluation result for further use. | v1.1.0 |
+| Optional Spring Environment | @SpELScriptAssert can be used standalone or with Spring Environment. The only difference is that `@springComponent` syntax of SpEL expression won't work in standalone mode. | v1.0.0 |
+| Java Module supported  | module-info.java | v1.0.0 |
+| performIf | A condition expression for determining whether a validation is performed or NOT. | v1.0.0 |
+| helpers | Register static methods from given Helper Classes. Methods can be called by `#helperMethod` syntax in SpEL expression. | v1.0.0 |
+| reportOn | Same as `reportOn` in Hibernate validation @ScriptAssert annotation. | v1.0.0 |
+| [Smart Evaluation Strategies](#1.0.0_1) | Smart boolean convertion for evaluation values. | v1.0.0 |
+
+## [:top:](#top) SpEL code blocks(#{...}) in message template<a id="1.1.0_1"></a>
+```java
+@SpELScriptAssert( //
+    script = "str.empty", //
+    message = "str is NOT empty, str is '#{str}' with length of #{str.length}")
+public class CodeBlockBean {
+  public String str = "SpELScriptAssert";
+}
+```
+Validation message:
+```
+str is NOT empty, str is 'SpELScriptAssert' with length of 16
+```
+
+## [:top:](#top) Utilize `target` attribute<a id="1.1.0_2"></a>
+The `target` attribute can hold an evaluation value for further uses in `script` and `message` contents. It can not only impove the readability but also save computation time if the evaluation of the expression in `target` attribute is highly time comsuming.
+```java
+@SpELScriptAssert( //
+    target = "bi1.multiply(bi2)", //
+    script = "#target.toString.length < 10", //
+    reportOn = "bi1 * bi2", //
+    message = "{reportOn} = #{#target} and the digits are more than 10")
+public class TargetBean {
+  public BigInteger bi1 = new BigInteger("123456789");
+  public BigInteger bi2 = new BigInteger("987654321");
+}
+```
+Validation message:
+```
+bi1 * bi2 = 121932631112635269 and the digits are more than 10
+```
+
+## [:top:](#top) SpELScriptAssert Evaluation Strategies<a id="1.0.0_1"></a>
 SpELScriptAssert expects all evaluation scripts (both `script` and `performIf`) which always return Boolean values, however it also accepts other returning value types and treats them as Boolean values.
 
 ### 1. Non-zero number is True, zero is False.

@@ -1,6 +1,7 @@
 package com.github.wnameless.spring.validation.spelscriptassert;
 
 import static java.util.Objects.requireNonNull;
+import java.util.Optional;
 import java.util.regex.Pattern;
 import org.springframework.expression.EvaluationContext;
 import org.springframework.expression.ExpressionParser;
@@ -34,8 +35,8 @@ public final class SpELTemplateStringResolver {
   public String resolve(String templateString, EvaluationContext evaluationContext) {
     return codeBlockPattern.matcher(templateString).replaceAll(matchResult -> {
       String expr = matchResult.group(1);
-      Object value = exprParser.parseExpression(expr).getValue(evaluationContext);
-      return value != null ? value.toString() : "null";
+      return Optional.ofNullable(exprParser.parseExpression(expr).getValue(evaluationContext))
+          .map(Object::toString).orElse("null");
     });
   }
 
