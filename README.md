@@ -93,7 +93,7 @@ public class SpELScriptAssertConfig {
 
   @Bean
   LocalValidatorFactoryBean validatorFactoryBean() {
-    LocalValidatorFactoryBean bean = new LocalValidatorFactoryBean();
+    var bean = new LocalValidatorFactoryBean();
     bean.setValidationMessageSource(messageSource);
     return bean;
   }
