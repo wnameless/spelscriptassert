@@ -1,10 +1,9 @@
-package com.github.wnameless.spring;
+package com.github.wnameless.spring.validation.spelscriptassert;
 
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import java.util.regex.Pattern;
 import org.junit.jupiter.api.Test;
 import org.springframework.expression.spel.standard.SpelExpressionParser;
-import com.github.wnameless.spring.validation.spelscriptassert.SpELTemplateStringResolver;
 
 public class SpELTemplateStringResolverTests {
 
