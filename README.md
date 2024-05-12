@@ -55,12 +55,16 @@ public class MathHelper {
 ```
 
 ## Demo - advanced usage
+`target` evaluated value can be reused in script and message attributes by calling **#target**
+<br>
+`#{...}` blocks in message attribute are all SpEL expressions which will be evaluated eventually
+
 Bean
 ```java
 @SpELScriptAssert( //
     target = "a * b * c", //
     script = "#target > 10", //
-    message = "#{#target} {validation.AdvancedBean.multiplication} #{10 - T(java.lang.Math).multiplyExact(a, b) * c + 1}")
+    message = "#{#target} {validation.AdvancedBean.msg} #{10 - T(java.lang.Math).multiplyExact(a, b) * c + 1}")
 public class AdvancedBean {
 
   public Integer a = 1;
@@ -77,7 +81,7 @@ Validation message:
 
 Message properties:
 ```properties
-validation.AdvancedBean.multiplication=is NOT greater than Ten before adding
+validation.AdvancedBean.msg=is NOT greater than Ten before adding
 ```
 
 # Maven Repo
