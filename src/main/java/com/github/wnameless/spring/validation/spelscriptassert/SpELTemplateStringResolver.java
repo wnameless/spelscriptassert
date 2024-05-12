@@ -19,7 +19,7 @@ public final class SpELTemplateStringResolver {
   private final ExpressionParser exprParser;
 
   /**
-   * Creates {@link SpELTemplateStringResolver} with {@link #DEFAULT_PATTERN} and
+   * Creates a {@link SpELTemplateStringResolver} with {@link #DEFAULT_PATTERN} and
    * {@link SpelExpressionParser}.
    */
   public SpELTemplateStringResolver() {
@@ -28,7 +28,7 @@ public final class SpELTemplateStringResolver {
   }
 
   /**
-   * Creates {@link SpELTemplateStringResolver} with given codeBlockPattern and exprParser.
+   * Creates a {@link SpELTemplateStringResolver} with given codeBlockPattern and exprParser.
    * 
    * @param codeBlockPattern used to find SpEL code blocks
    * @param exprParser used to parse SpEL expression
@@ -39,7 +39,7 @@ public final class SpELTemplateStringResolver {
   }
 
   /**
-   * Creates {@link SpELTemplateStringResolver} with given codeBlockPattern and
+   * Creates a {@link SpELTemplateStringResolver} with given codeBlockPattern and
    * {@link SpelExpressionParser}.
    * 
    * @param codeBlockPattern used to find SpEL code blocks
@@ -50,7 +50,8 @@ public final class SpELTemplateStringResolver {
   }
 
   /**
-   * Creates {@link SpELTemplateStringResolver} with {@link #DEFAULT_PATTERN} and given exprParser.
+   * Creates a {@link SpELTemplateStringResolver} with {@link #DEFAULT_PATTERN} and given
+   * exprParser.
    * 
    * @param exprParser used to parse SpEL expression
    */
