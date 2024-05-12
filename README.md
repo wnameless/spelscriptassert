@@ -63,8 +63,8 @@ Bean
 ```java
 @SpELScriptAssert( //
     target = "a * b * c", //
-    script = "#target > 10", //
-    message = "#{#target} {validation.AdvancedBean.msg} #{10 - T(java.lang.Math).multiplyExact(a, b) * c + 1}")
+    script = "#target >= 10", //
+    message = "#{#target} {validation.AdvancedBean.msg} #{T(java.lang.Math).abs(#target - 10)}")
 public class AdvancedBean {
 
   public Integer a = 1;
@@ -76,12 +76,12 @@ public class AdvancedBean {
 
 Validation message:
 ```
-6 is NOT greater than Ten before adding 5
+6 is NOT greater than or equal to Ten before adding 4
 ```
 
 Message properties:
 ```properties
-validation.AdvancedBean.msg=is NOT greater than Ten before adding
+validation.AdvancedBean.msg=is NOT greater than or equal to Ten before adding
 ```
 
 # Maven Repo

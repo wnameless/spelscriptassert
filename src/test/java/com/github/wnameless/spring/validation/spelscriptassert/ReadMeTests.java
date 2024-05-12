@@ -69,7 +69,8 @@ public class ReadMeTests {
     var bean = new AdvancedBean();
     var violations = List.copyOf(validator.validate(bean));
     assertEquals(1, violations.size());
-    assertEquals("6 is NOT greater than Ten before adding 5", violations.get(0).getMessage());
+    assertEquals("6 is NOT greater than or equal to Ten before adding 4",
+        violations.get(0).getMessage());
   }
 
   @Test

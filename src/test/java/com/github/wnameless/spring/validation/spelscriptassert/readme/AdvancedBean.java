@@ -4,8 +4,8 @@ import com.github.wnameless.spring.validation.spelscriptassert.SpELScriptAssert;
 
 @SpELScriptAssert( //
     target = "a * b * c", //
-    script = "#target > 10", //
-    message = "#{#target} {validation.AdvancedBean.msg} #{10 - T(java.lang.Math).multiplyExact(a, b) * c + 1}")
+    script = "#target >= 10", //
+    message = "#{#target} {validation.AdvancedBean.msg} #{T(java.lang.Math).abs(#target - 10)}")
 public class AdvancedBean {
 
   public Integer a = 1;
